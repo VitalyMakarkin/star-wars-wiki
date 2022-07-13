@@ -1,2 +1,10 @@
 # star-wars-wiki
-based on swapi.dev
+
+Purpose:
+Demonstrate development skills
+
+Web api:
+Open Source https://swapi.dev
+
+Requirements:
+Use Hilt, OkHttp, swapi.dev (Web Api)
