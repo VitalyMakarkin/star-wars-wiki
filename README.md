@@ -4,16 +4,16 @@
 
 Demonstrate development skills:
 
-- using Clean Architecture and dependency injection design pattern
-- navigate on app and using single activity
-- network communication using REST architecture
+- using Clean Architecture and Dependency Injection design pattern
+- using app navigation with Single Activity architecture
+- using network with REST architecture
 
 ## Requirements
 
 Use tools:
 
 - [Hilt] - dependency injection
-- [Retrofit] - communication
+- [Retrofit] - network
 - [Cicerone] - navigation
 
 Use web api:
