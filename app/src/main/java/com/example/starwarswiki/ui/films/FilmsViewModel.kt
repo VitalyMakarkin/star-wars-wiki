@@ -4,22 +4,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.starwarswiki.data.StartWarsApi
+import com.example.starwarswiki.data.StarWarsApi
+import com.example.starwarswiki.model.FilmsPage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class FilmsViewModel @Inject constructor(
-    private val startWarsApi: StartWarsApi
+    private val starWarsApi: StarWarsApi
 ) : ViewModel() {
 
-    private var _films: MutableLiveData<String> = MutableLiveData()
-    val films: LiveData<String> get() = _films
+    private var _films: MutableLiveData<FilmsPage> = MutableLiveData()
+    val films: LiveData<FilmsPage> get() = _films
 
     init {
         viewModelScope.launch {
-            _films.value = startWarsApi.getFilms()
+            _films.value = starWarsApi.getFilms().body()
         }
+
     }
 }

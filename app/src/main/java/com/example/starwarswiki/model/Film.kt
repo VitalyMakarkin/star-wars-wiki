@@ -4,6 +4,21 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+data class FilmsPage(
+    @SerialName("count")
+    val count: Int,
+
+    @SerialName("next")
+    val nextUrl: String?,
+
+    @SerialName("previous")
+    val prevUrl: String?,
+
+    @SerialName("results")
+    val results: List<Film>
+)
+
+@Serializable
 data class Film(
     @SerialName("title")
     val title: String,
@@ -23,3 +38,5 @@ data class Film(
     @SerialName("opening_crawl")
     val openingCrawl: String
 )
+
+

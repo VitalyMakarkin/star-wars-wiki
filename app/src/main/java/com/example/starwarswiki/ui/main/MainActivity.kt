@@ -3,7 +3,7 @@ package com.example.starwarswiki.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.starwarswiki.R
-import com.example.starwarswiki.Screens.Films
+import com.example.starwarswiki.ui.Screens.Films
 import com.github.terrakok.cicerone.Command
 import com.github.terrakok.cicerone.Navigator
 import com.github.terrakok.cicerone.NavigatorHolder
