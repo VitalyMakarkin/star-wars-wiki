@@ -22,6 +22,5 @@ class FilmsViewModel @Inject constructor(
         viewModelScope.launch {
             _films.value = starWarsApi.getFilms().body()
         }
-
     }
 }

@@ -6,20 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.starwarswiki.databinding.FragmentFilmsBinding
 import com.example.starwarswiki.databinding.ItemFilmBinding
 import com.example.starwarswiki.model.Film
 import dagger.hilt.android.AndroidEntryPoint
 
-class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
+class FilmListAdapter : ListAdapter<Film, FilmListAdapter.ViewHolder>(FilmDiffCallback()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
 
-    private var items: List<Film> = emptyList()
-
-    fun addFilms(films: List<Film>) {
-        items = films
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
     }
 
     class ViewHolder(private val binding: ItemFilmBinding) :
@@ -32,17 +35,14 @@ class FilmAdapter : RecyclerView.Adapter<FilmAdapter.ViewHolder>() {
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
-    }
+    class FilmDiffCallback : DiffUtil.ItemCallback<Film>() {
+        override fun areItemsTheSame(oldItem: Film, newItem: Film): Boolean {
+            return oldItem.episodeId == newItem.episodeId
+        }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        override fun areContentsTheSame(oldItem: Film, newItem: Film): Boolean {
+            return oldItem == newItem
+        }
     }
 }
 
@@ -51,8 +51,7 @@ class FilmsFragment : Fragment() {
 
     private val viewModel: FilmsViewModel by viewModels()
     private lateinit var binding: FragmentFilmsBinding
-    private val filmAdapter: FilmAdapter by lazy { FilmAdapter() }
-
+    private val filmAdapter: FilmListAdapter by lazy { FilmListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,7 +71,7 @@ class FilmsFragment : Fragment() {
         }
 
         viewModel.films.observe(viewLifecycleOwner) { films ->
-            filmAdapter.addFilms(films.results)
+            filmAdapter.submitList(films.results)
         }
     }
 }
