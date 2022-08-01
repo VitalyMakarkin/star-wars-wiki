@@ -31,7 +31,7 @@ data class Film(
 
     @SerialName("episode_id")
     @Serializable(with = RomanNumberSerializer::class)
-    val episodeId: String,
+    val episode: String,
 
     @SerialName("director")
     val director: String,
@@ -65,7 +65,7 @@ object RomanNumberSerializer : KSerializer<String> {
     )
 
     override val descriptor: SerialDescriptor =
-        buildClassSerialDescriptor("RomanNumberString")
+        buildClassSerialDescriptor("RomanNumberSerializer")
 
     override fun serialize(encoder: Encoder, value: String) {
         var initialValue = value.uppercase()
