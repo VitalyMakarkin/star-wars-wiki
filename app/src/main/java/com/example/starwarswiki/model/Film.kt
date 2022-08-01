@@ -48,7 +48,7 @@ data class Film(
 
 @Serializer(forClass = Film::class)
 object RomanNumberSerializer : KSerializer<String> {
-    private val romanLetters = mapOf<Int, String>(
+    private val romanLetters = mapOf(
         1000 to "M",
         900 to "CM",
         500 to "D",
@@ -65,7 +65,7 @@ object RomanNumberSerializer : KSerializer<String> {
     )
 
     override val descriptor: SerialDescriptor =
-        buildClassSerialDescriptor("RomanNumberSerializer")
+        buildClassSerialDescriptor("RomanNumberTypeSerializer")
 
     override fun serialize(encoder: Encoder, value: String) {
         var initialValue = value.uppercase()

@@ -17,14 +17,12 @@ class FilmViewModel @Inject constructor(
     val film: LiveData<Film> get() = _film
 
     init {
-        //_film = savedStateHandle.getLiveData<String>("id").switchMap
-
-        val stateId = savedStateHandle.get<Int>("PARAM_ID")
+        val stateId = savedStateHandle.get<Int>("param_id")
         Log.d("FILM", "Film ID: $stateId")
 
         viewModelScope.launch {
-            TODO("Pass argument from fragment to view model")
-            //_film.value = starWarsApi.getFilm().
+            _film.value = starWarsApi.getFilm(stateId!!).body()
+            Log.d("FILM", _film.value.toString())
         }
     }
 }

@@ -15,13 +15,17 @@ class FilmsFragment : Fragment() {
 
     private val viewModel: FilmsViewModel by viewModels()
     private lateinit var binding: FragmentFilmsBinding
-    private val filmAdapter: FilmListAdapter by lazy { FilmListAdapter() }
+    private val filmAdapter: FilmListAdapter by lazy {
+        FilmListAdapter{
+            viewModel.displayFilm()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFilmsBinding.inflate(inflater, container, false)
         return binding.root
     }

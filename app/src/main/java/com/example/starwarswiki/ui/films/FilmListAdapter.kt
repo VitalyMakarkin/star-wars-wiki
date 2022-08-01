@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.*
 import com.example.starwarswiki.databinding.ItemFilmBinding
 import com.example.starwarswiki.model.Film
 
-class FilmListAdapter : ListAdapter<Film, FilmListAdapter.ViewHolder>(FilmDiffCallback()) {
+class FilmListAdapter(private val onItemClick: (Film) -> Unit) :
+    ListAdapter<Film, FilmListAdapter.ViewHolder>(FilmDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -18,13 +20,16 @@ class FilmListAdapter : ListAdapter<Film, FilmListAdapter.ViewHolder>(FilmDiffCa
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: ItemFilmBinding) :
+    inner class ViewHolder(private val binding: ItemFilmBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(film: Film) {
             binding.filmName.text = film.title
             binding.filmEpisode.text = "Episode ${film.episode}"
             binding.filmReleaseDate.text = film.releaseDate
+            itemView.setOnClickListener {
+                onItemClick(film)
+            }
         }
     }
 
